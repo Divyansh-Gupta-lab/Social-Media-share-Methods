@@ -1,2 +1,2 @@
 # Social-Media-share-Methods
-React.js code to that allows users to share a url on various social media
+A React.js social media fontend as well as an express.js backend to connect with and share posts on various social medias through your website 
