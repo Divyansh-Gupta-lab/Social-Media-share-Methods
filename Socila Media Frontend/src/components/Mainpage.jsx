@@ -3,9 +3,10 @@ import { useRef, useEffect } from "react";
 import Facebook from "./Facebook";
 // import Telegram from "./Telegram";
 import Linkedin from "./Linkedin";
-import Twitter from "./Twitter-backup";
+import Twitter from "./Twitter";
 import Reddit from "./Reddit-backup";
 import Cookie from "./Cookie-check";
+import Instagram from "./Instagram";
 
 export default function Mainpage() {
   const telegramWrapperRef = useRef(null);
@@ -43,6 +44,7 @@ export default function Mainpage() {
 
   return (
     <div>
+      <Instagram />
       <Facebook />
       {/* <Telegram /> */}
       <Linkedin />
@@ -67,7 +69,7 @@ export default function Mainpage() {
         > */}
       <button onClick={() => telegramFunction()}>Custom Button</button>
       {/* <a href="https://twitter.com/DivyanshATR1000?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @DivyanshATR1000</a> */}
-      <div
+      {/* <div
         className="fb-login-button"
         data-width=""
         data-size=""
@@ -75,7 +77,7 @@ export default function Mainpage() {
         data-layout=""
         data-auto-logout-link="false"
         data-use-continue-as="true"
-      ></div>
+      ></div> */}
     </div>
   );
 }
