@@ -5,6 +5,10 @@
     <meta property="og:title" content="Hydro Geyser Test" />
     <meta property="og:site_name" content="Hydro Geyser" />
     <meta
+      http-equiv="Content-Security-Policy"
+      content="frame-ancestors 'self' *.reddit.com *.snooguts.net;"
+    />
+    <meta
       property="og:description"
       content="Earn points and drops in hydro geyser"
     />
@@ -24,8 +28,7 @@
       defer
       crossorigin="anonymous"
       src="https://connect.facebook.net/en_US/sdk.js#version=v2.2&appId=1487639112104592&status=true&cookie=true&xfbml=true"
-    ></script> -->
-
+      ></script> -->
     <script
       async
       defer
@@ -34,12 +37,21 @@
       nonce="AcewAjWa"
     ></script>
     <script async src="https://telegram.org/js/telegram-widget.js?22"></script>
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script
+      async
+      src="https://platform.twitter.com/widgets.js"
+      charset="utf-8"
+    ></script>
     <!-- <script async src="https://www.instagram.com/embed.js"></script> -->
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <!-- <script
+      async=""
+      src="https://embed.reddit.com/widgets.js"
+      charset="UTF-8"
+    ></script> -->
     <!-- <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-login="HydroGeyserTestBot" data-size="large" data-auth-url="http://localhost:5173" data-request-access="write"></script> -->
   </body>
 </html>

@@ -7,6 +7,7 @@ import Twitter from "./Twitter";
 import Reddit from "./Reddit-backup";
 import Cookie from "./Cookie-check";
 import Instagram from "./Instagram";
+import RedditEmbed from "./RedditEmbed";
 
 export default function Mainpage() {
   const telegramWrapperRef = useRef(null);
@@ -47,6 +48,7 @@ export default function Mainpage() {
       <Instagram />
       <Facebook />
       {/* <Telegram /> */}
+      <RedditEmbed />
       <Linkedin />
       <Twitter />
       <Reddit />

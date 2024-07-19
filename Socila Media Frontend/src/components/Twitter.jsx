@@ -68,7 +68,7 @@ export default function Twitter() {
       </blockquote>
       <a
         href="https://twitter.com/intent/tweet?button_hashtag=HYDROMeme&ref_src=twsrc%5Etfw"
-        class="twitter-hashtag-button"
+        className="twitter-hashtag-button"
         data-show-count="false"
       >
         Tweet #HYDROMeme

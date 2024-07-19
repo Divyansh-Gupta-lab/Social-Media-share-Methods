@@ -2,25 +2,28 @@ import React, { useState, useEffect } from "react";
 
 const FacebookLogin = () => {
   const [facebookAuth, setFacebookAuth] = useState();
-  window.fbAsyncInit = function() {
+  window.fbAsyncInit = function () {
     FB.init({
-      appId      : '1854178161749963',
-      cookie     : true,
-      xfbml      : true,
-      version    : 'v20.0'
+      appId: "1854178161749963",
+      cookie: true,
+      xfbml: true,
+      version: "v20.0",
     });
-      
-    FB.AppEvents.logPageView();   
-      
+
+    FB.AppEvents.logPageView();
   };
 
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "https://connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
+  (function (d, s, id) {
+    var js,
+      fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {
+      return;
+    }
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  })(document, "script", "facebook-jssdk");
 
   const handleLogin = () => {
     window.FB.login(
@@ -35,7 +38,8 @@ const FacebookLogin = () => {
         }
       },
       {
-        scope: "email, pages_manage_metadata", //,pages_manage_metadata,pages_manage_posts,pages_manage_read_engagement,pages_show_list,pages_read_engagement,pages_read_user_content",
+        scope:
+          "email,pages_manage_metadata,instagram_basic,instagram_manage_messages,pages_read_engagement,pages_show_list", //,pages_manage_metadata,pages_manage_posts,pages_manage_read_engagement,pages_show_list,pages_read_engagement,pages_read_user_content",
       }
     );
   };
