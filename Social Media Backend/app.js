@@ -1,9 +1,11 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
+const qs = require("qs");
 var cors = require("cors");
 const OAuth = require("oauth-1.0a");
 const crypto = require("crypto");
+const otplib = require("otplib");
 
 const cookieParser = require("cookie-parser");
 const app = express();
@@ -141,6 +143,14 @@ app.post(
   }
 );
 
+app.get(`/otp`, async (req, res) => {
+  const token = otplib.authenticator.generate(
+    ""
+  );
+  console.log("Generated OTP token:", token);
+  res.json(token);
+});
+
 app.post(`/`, async (req, res) => {
   res.json("hello");
 });
@@ -172,9 +182,9 @@ app.get("/twitter/requesttoken", async (req, res) => {
     // Handle errors
     console.error(
       "Error:",
-      error.response ? error.response.data : error.message
+      error?.response ? error?.response.data : error.message
     );
-    res.status(error.response ? error.response.status : 500).send("Error");
+    res.status(error?.response ? error?.response.status : 500).send("Error");
   }
 });
 
@@ -245,14 +255,14 @@ app.get("/twitter/tweet", async (req, res) => {
     // Handle errors
     console.error(
       "Error:",
-      error.response ? error.response.data : error.message
+      error?.response ? error?.response.data : error.message
     );
     // console.log(error);
-    res.status(error.response ? error.response.status : 500).send("Error");
+    res.status(error?.response ? error?.response.status : 500).send("Error");
   }
 });
 
-const twitterEndpoint = 'https://api.twitter.com/2/tweets/search/recent';
+const twitterEndpoint = "https://api.twitter.com/2/tweets/search/recent";
 
 // Define your Express route
 app.get("/twitter/search", async (req, res) => {
@@ -260,7 +270,7 @@ app.get("/twitter/search", async (req, res) => {
     // Extract the Bearer token from the request parameters
     const bearerToken = req.query.bearer_token;
     const query = "#modi";
-    console.log(bearerToken)
+    console.log(bearerToken);
 
     // Make the request to the Twitter API
     const response = await axios.get(twitterEndpoint, {
@@ -268,8 +278,8 @@ app.get("/twitter/search", async (req, res) => {
         Authorization: `Bearer ${bearerToken}`,
       },
       params: {
-        query: query // Pass the query parameter here
-    }
+        query: query, // Pass the query parameter here
+      },
     });
 
     // Send the response from Twitter API to the client
@@ -282,15 +292,15 @@ app.get("/twitter/search", async (req, res) => {
 });
 
 // Add support for GET requests to Facebook webhook
-app.get("/insta/webhook", (req, res) => {
+app.get("/v1/api/instagramService/webhook", (req, res) => {
   // Parse the query params
   var mode = req.query["hub.mode"];
   var token = req.query["hub.verify_token"];
   var challenge = req.query["hub.challenge"];
 
   console.log("-------------- New Request GET --------------");
-  console.log("Headers:"+ JSON.stringify(req.headers, null, 3));
-  console.log("Body:"+ JSON.stringify(req.body, null, 3));
+  // console.log("Headers:" + JSON.stringify(req.headers, null, 3));
+  console.log("Body:" + JSON.stringify(req.body, null, 3));
 
   // Check if a token and mode is in the query string of the request
   if (mode && token) {
@@ -310,9 +320,51 @@ app.get("/insta/webhook", (req, res) => {
   }
 });
 
-app.post('/*', function (req, res) {
+app.post("/v1/api/instagramService/webhook", function (req, res) {
   console.log("-------------- New Request POST --------------");
-  console.log("Headers:"+ JSON.stringify(req.headers, null, 3));
-  console.log("Body:"+ JSON.stringify(req.body, null, 3));
+  console.log("Headers:" + JSON.stringify(req.headers, null, 3));
+  console.log("Body:" + JSON.stringify(req.body, null, 3));
   res.json({ message: "Thank you for the message" });
-})
+});
+
+app.post("/insta/login", (req, res) => {
+  const data = {
+    client_id: "3103819869753726",
+    client_secret: "3ebf1b084786efc760b2316c0a2f8859",
+    code: req.body.code,
+    grant_type: "authorization_code",
+    redirect_uri: "https://dev-geyser.hydro.online/",
+  };
+
+  // Format the data to x-www-form-urlencoded
+  const formattedData = qs.stringify(data);
+
+  // Set the headers
+  const config = {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Cookie:
+        "csrftoken=tr8fxghTAKH2ddFYHoAkQC; ig_did=06AC7D0A-D379-4CA1-A0E9-4B577A249704; ig_nrcb=1; mid=ZmrbHAAEAAF461Lt5Jgey3DdrNLZ",
+    },
+  };
+  let accessToken;
+  axios
+    .post("https://api.instagram.com/oauth/access_token", formattedData, config)
+    .then((response) => {
+      console.log("Response:", response.data);
+      accessToken = response.data.access_token;
+      return;
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+  console.log(accessToken);
+  return;
+});
+
+// app.post("/*", function (req, res) {
+//   console.log("-------------- New Request POST --------------");
+//   console.log("Headers:" + JSON.stringify(req.headers, null, 3));
+//   console.log("Body:" + JSON.stringify(req.body, null, 3));
+//   res.json({ message: "Thank you for the message" });
+// });
