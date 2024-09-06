@@ -145,7 +145,7 @@ app.post(
 
 app.get(`/otp`, async (req, res) => {
   const token = otplib.authenticator.generate(
-    ""
+    ''
   );
   console.log("Generated OTP token:", token);
   res.json(token);
